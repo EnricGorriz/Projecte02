@@ -36,38 +36,30 @@
 	</head>
 	<body>
 		<form action="" method="GET">
-			
 			Problema: 
-				<select name="problema">
-					<option value="problema">Selecciona el problema</option>
+				<select name="Problema">
+					<option value="Problema">Selecciona el problema</option>
+						
 						<?php
 						//realizamos la conexión con mysql
 			
-						$con = mysqli_connect('localhost', 'root', '', 'bd_botiga_animals');
-						$sql = "SELECT * FROM `tbl_tipus_animal`";
-						$sql2 = "SELECT * FROM `tbl_raca`";
-						
+						$con = mysqli_connect('localhost', 'root', '', 'bd_reservas');
+						$sql = "SELECT * FROM `tbl_recursos`";
 						$datos = mysqli_query($con, $sql);
-						$datos2 = mysqli_query($con, $sql2);
-
-						echo "INICIO";
-						while ($lista = mysqli_fetch_array($datos2))
-						   echo utf8_encode ("<option value=\"$lista[tipus_anim_id]\">$lista[tipus_anim_nom]</option>"); 
-						
+						echo "$sql";
+		
+							while ($lista = mysqli_fetch_array($datos))
+							   echo utf8_encode("<option value=\"$lista[rec_id]\">$lista[rec_contingut]</option>"); 
+							
 						mysqli_close($con);
 						?>
-				</select> </br><br/>
+				</select> </br></br>
 				
-		
-				<label> Seleccionar Fecha:</label>
-				<input type="date" name="datepicker" id="datepicker" readonly="readonly" size="12" />
-				
-			
-
-			
-			
-			
+			Seleccionar Fecha
+				<input type="date" name="datepicker" id="datepicker" readonly="readonly" size="12" /></br><br/>
+			Comentarios sobre a incidencia: </br>	
+				<textarea name="comentarios" rows="10" cols="40"></textarea></br><br/>
 			<input type="submit" value="Enviar">
-			</form>
+		</form>
 	</body>
 </html>

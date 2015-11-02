@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>Formulario Incidencia</title>
+	</head>
+	<body>
+		<form action=".php" method="GET">
+			
+			Problema: 
+				<select name="problema">
+					<option value="problema">Selecciona el problema</option>
+						<?php
+						//realizamos la conexión con mysql
+			
+						$con = mysqli_connect('localhost', 'root', '', 'bd_botiga_animals');
+						$sql = "SELECT * FROM `tbl_tipus_animal`";
+						$sql2 = "SELECT * FROM `tbl_raca`";
+						
+						$datos = mysqli_query($con, $sql);
+						$datos2 = mysqli_query($con, $sql2);
+
+						echo "INICIO";
+						while ($lista = mysqli_fetch_array($datos2))
+						   echo utf8_encode ("<option value=\"$lista[tipus_anim_id]\">$lista[tipus_anim_nom]</option>"); 
+						
+						mysqli_close($con);
+						?>
+				</select> </br><br/>
+				
+			Fecha: 
+				<input type="date" name="fecha">
+				
+			Fecha nacimiento: <input type="date" name="cumpleanios" step="1" min="2013-01-01" max="2013-12-31" value="2013-01-01">
+			
+				<input type="date" name="cumpleanios" step="1" min="2015-01-01" max="2013-12-31" value="<?php echo date("Y-m-d")?>">
+				<?php echo date("Y-m-d")?>
+
+
+			
+			
+			
+			<input type="submit" value="Enviar">
+			</form>
+	</body>
+</html>

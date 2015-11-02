@@ -13,24 +13,45 @@
     
     <div class="fondo">
 
-    	<div class="principal">
+        <div class="principal">
 
             <h1>AULAS</h1>
-            <div class="objeto">objeto1</div>
-            <div class="objeto2">objeto2</div><br />
+ 
+            <?php
+            $con = mysqli_connect('localhost', 'root', '', 'bd_reservas');
+            $sql = ("SELECT * FROM `tbl_recursos` WHERE tbl_recursos.rec_tipo_rec= 1");
 
-            <div class="objeto">objeto3</div>
-            <div class="objeto2">objeto4</div><br />
+                $datos = mysqli_query($con, $sql);
+                    if(mysqli_num_rows($datos) > 0){
+                        while($cerca = mysqli_fetch_array($datos)){
+                            $cerca['rec_contingut']= utf8_encode($cerca['rec_contingut']);
+
+                            echo "<div class='objeto'><div class='objeto2'>$cerca[rec_contingut]<br/></div>";
+                            echo "<input type='submit' value='RESERVAR'/></div>";
+                        }
+                    }
+            mysqli_close($con);
+            ?>
         </div>
 
-    	<div class="aside"><h1>MATERIALES</h1>
+        <div class="aside"><h1>MATERIALES</h1>
             
-            <div class="objeto">objeto1</div>
-            <div class="objeto2">objeto2</div><br />
+            <?php
+            $con = mysqli_connect('localhost', 'root', '', 'bd_reservas');
+            $sql = ("SELECT * FROM `tbl_recursos` WHERE tbl_recursos.rec_tipo_rec= 0");
 
-            <div class="objeto">objeto3</div>
-            <div class="objeto2">objeto4</div><br />
-        
+                $datos = mysqli_query($con, $sql);
+                    if(mysqli_num_rows($datos) > 0){
+                        while($cerca = mysqli_fetch_array($datos)){
+                            $cerca['rec_contingut']= utf8_encode($cerca['rec_contingut']);
+
+                            echo "<div class='objeto'><div class='objeto2'>$cerca[rec_contingut]<br/></div>";
+                            echo "<input type='submit' value='RESERVAR'/></div>";
+                        }
+                    }
+            mysqli_close($con);
+            ?>
+
         </div>
     </div>
     </body>

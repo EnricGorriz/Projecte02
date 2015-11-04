@@ -8,7 +8,7 @@ session_start();
 	
 		if(isset($_POST['mail']))$mail = $_POST['mail'];
 		if(isset($_POST['contraseña']))$contraseña = $_POST['contraseña'];
-		$con = mysqli_connect('localhost', 'root', 'DAW22015', 'bd_reservas');
+		$con = mysqli_connect('localhost', 'root', '', 'bd_reservas');
 		$sql=("SELECT * FROM `tbl_usuario` WHERE usu_email = '$mail' && usu_contra = '$contraseña' ");
 		//echo $sql;
 		$datos = mysqli_query($con, $sql);
@@ -29,7 +29,7 @@ session_start();
 		if(isset($_POST['reservar'])){
 			
 			if(isset($_POST['reservar']))$reservar = $_POST['reservar'];
-			$con = mysqli_connect('localhost', 'root', 'DAW22015', 'bd_reservas');
+			$con = mysqli_connect('localhost', 'root', '', 'bd_reservas');
 			//echo $reservar;
 			//$sql1=("SELECT * FROM `tbl_recursos` WHERE rec_id = $reservar");
 			//echo $sql1;
@@ -62,15 +62,23 @@ echo "<br/>Bienvenido $_SESSION[nombre]";
             <h1>AULAS</h1>
  
             <?php
-            $con = mysqli_connect('localhost', 'root', 'DAW22015', 'bd_reservas');
+            $con = mysqli_connect('localhost', 'root', '', 'bd_reservas');
             $sql = ("SELECT * FROM `tbl_recursos` WHERE tbl_recursos.rec_tipo_rec= 1");
 
                 $datos = mysqli_query($con, $sql);
                     if(mysqli_num_rows($datos) > 0){
                         while($cerca = mysqli_fetch_array($datos)){
                             $cerca['rec_contingut']= utf8_encode($cerca['rec_contingut']);
+                            $img = "images/$cerca[rec_contingut].jpg";
 
-                            echo "<div class='objeto'><div class='objeto2'>$cerca[rec_contingut]<br/></div>";
+                            if($cerca['rec_reservado']=="1"){
+                            	$img = "images/$cerca[rec_contingut].jpg";
+                            }else{
+                            	$img = "images/$cerca[rec_contingut]ocupada.jpg";
+                            }
+
+
+                            echo "<div class='objeto'>$cerca[rec_contingut]<div class='objeto2'><img src='$img'><br/></div>";
 							echo "<form action='#' method='POST'>";
 							echo "<input type='hidden' name='reservar' value='$cerca[rec_id]'/>";
 							if($cerca['rec_reservado']=="1"){
@@ -94,15 +102,22 @@ echo "<br/>Bienvenido $_SESSION[nombre]";
         <div class="aside"><h1>MATERIALES</h1>
             
             <?php
-            $con = mysqli_connect('localhost', 'root', 'DAW22015', 'bd_reservas');
+            $con = mysqli_connect('localhost', 'root', '', 'bd_reservas');
             $sql = ("SELECT * FROM `tbl_recursos` WHERE tbl_recursos.rec_tipo_rec= 0");
 
                 $datos = mysqli_query($con, $sql);
                     if(mysqli_num_rows($datos) > 0){
                         while($cerca = mysqli_fetch_array($datos)){
                             $cerca['rec_contingut']= utf8_encode($cerca['rec_contingut']);
+                            $img = "images/$cerca[rec_contingut].jpg";
 
-                              echo "<div class='objeto'><div class='objeto2'>$cerca[rec_contingut]<br/></div>";
+                              if($cerca['rec_reservado']=="1"){
+                            	$img = "images/$cerca[rec_contingut].jpg";
+                            }else{
+                            	$img = "images/$cerca[rec_contingut]ocupada.jpg";
+                            }
+
+                            echo "<div class='objeto'>$cerca[rec_contingut]<div class='objeto2'><img src='$img'><br/></div>";
 							echo "<form action='#' method='POST'>";
 							echo "<input type='hidden' name='reservar' value='$cerca[rec_id]'/>";
 							if($cerca['rec_reservado']=="1"){

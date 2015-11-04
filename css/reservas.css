@@ -16,7 +16,6 @@
    float: left;
    width: 50%;
    height: 100%;
-   background: blue;
    text-align: center;
    font-weight: bold;
 }
@@ -25,7 +24,6 @@
    float: right;
    width: 50%;
    height: 100%;
-   background: red;
    text-align: center;
    font-weight: bold;
 }
